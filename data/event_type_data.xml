@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+    <record id="birthday" model="event.type">
+            <field name="name">Birthday</field>
+            <field name="code">BDY</field>
+            <field name="image" type="base64" file="event_management/static/img/birthday.jpg"/>
+        </record>
+        <record id="wedding" model="event.type">
+            <field name="name">Wedding</field>
+            <field name="code">WED</field>
+            <field name="image" type="base64" file="event_management/static/img/wedding.jpg"/>
+        </record>
+        <record id="anniversary" model="event.type">
+            <field name="name">Anniversary</field>
+            <field name="code">ANV</field>
+            <field name="image" type="base64" file="event_management/static/img/birthday.jpg"/>
+        </record>
+        <record id="inauguration" model="event.type">
+            <field name="name">Inauguration</field>
+            <field name="code">ING</field>
+            <field name="image" type="base64" file="event_management/static/img/inaugration.jpg"/>
+        </record>
+</data>
+</odoo>

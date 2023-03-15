@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="portal_event_booking" name="Event Bookings" customize_show="True" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Event Bookings</t>
+                <t t-set="url" t-value="'/my/bookings'"/>
+                <t t-set="placeholder_count" t-value="'booking_count'"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_event_bookings" name="My Event Bookings">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Quotations</t>
+            </t>
+            <t t-if="bookings" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th class="text-center">Event Booking</th>
+                        <th class="text-center">Customer</th>
+                        <th class="text-center">Event Type</th>
+                        <th class="text-center">Booking Date</th>
+                        <th class="text-center">Start Date</th>
+                        <th class="text-center">End Date</th>
+<!--                        <th class="text-center"/>-->
+<!--                        <th class="text-end">Total</th>-->
+                    </tr>
+                    <t t-foreach="bookings" t-as="booking">
+                    <tr>
+                        <td class="text-center"><span t-field="booking.name"/></td>
+                        <td class="text-center"><span t-field="booking.customer_id"/></td>
+                        <td class="text-center"><span t-field="booking.type_id"/></td>
+                        <td class="text-center"><span t-field="booking.booking_date"/></td>
+                        <td class="text-center"><span t-field="booking.start_date"/></td>
+                        <td class="text-center"><span t-field="booking.end_date"/></td>
+                    </tr>
+                    </t>
+                </thead>
+            </t>
+        </t>
+    </template>
+</odoo>

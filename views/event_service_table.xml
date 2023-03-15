@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="event_service_table_action" model="ir.actions.act_window">
+            <field name="name">Service Table</field>
+            <field name="res_model">event.service.table</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="event_service_table_tree" model="ir.ui.view">
+            <field name="name">tree</field>
+            <field name="model">event.service.table</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="description" string="Description"/>
+                    <field name="quantity" string="Quantity"/>
+                    <field name="unit_price" string="Unit Price"/>
+                    <field name="subtotal" string="Subtotal" sum="total amt"/>
+                </tree>
+        </field>
+        </record>
+
+        <record id="event_service_table_form" model="ir.ui.view">
+        <field name="name">form</field>
+        <field name="model">event.service.table</field>
+        <field name="arch" type="xml">
+                 <form>
+                     <sheet>
+                         <group>
+                               <field name="description" string="Description"/>
+                               <field name="quantity" string="Quantity"/>
+                               <field name="unit_price" string="Unit Price"/>
+                               <field name="subtotal" string="Subtotal"/>
+                         </group>
+                     </sheet>
+                 </form>
+        </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_report_event" model="ir.actions.report">
+        <field name="name">Event Report</field>
+        <field name="model">event.booking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">event_management.report_event</field>
+    </record>
+    <template id="report_event">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 style="text-align:center;">Event Management</h2>
+                    <h4 style="text-align:center;">
+                        <t t-if="event_type_id">
+                            <span t-esc="event_type_id"/>
+                        </t>
+                    </h4>
+                    <br></br>
+                    <div>
+                        <t t-if="from_date">
+                            <t t-if="to_date">From Date:
+                                <span t-esc="from_date"/>
+                                <br></br>
+                                <br></br>
+                                To Date:
+                                <span t-esc="to_date"/>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            Date:
+                            <span t-esc="current_date"/>
+                        </t>
+                        <br></br>
+                        <br></br>
+                    </div>
+                    <br></br>
+                    <table border="1" align="centre" class="table">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Event Name</th>
+                                <t t-if="event_type_id">
+                                </t>
+                                <t t-else="">
+                                    <th>Event Type</th>
+                                </t>
+                                <th>Customer</th>
+                                <th>Event Booking Date</th>
+                                <th>Status</th>
+                                <th>Total Amount</th>
+<!--                                                                <t t-if="include_catering">-->
+<!--                                                                    <th>Catering</th>-->
+<!--                                                                </t>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="sql_data" t-as="i">
+                                <tr>
+                                    <td>
+                                        <span t-esc="i_index+1"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['name']"/>
+                                    </td>
+                                    <t t-if="event_type_id">
+                                    </t>
+                                    <t t-else="">
+                                        <td>
+                                            <t t-esc="i['event_type']"/>
+                                        </td>
+                                    </t>
+                                    <td>
+                                        <t t-esc="i['customer']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['booking_date']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['state']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="i['total']"/>
+                                    </td>
+<!--                                                                                                            <t t-if="include_catering">-->
+<!--                                                                                                                <td>-->
+<!--                                                                                                                    <t t-esc="i['catering']"/>-->
+<!--                                                                                                                </td>-->
+<!--                                                                                                            </t>-->
+
+                                    <t t-if="include_catering">
+                                        <tr>
+                                            <td colspan="2">
+                                                <t t-esc="i['catering']"/>
+                                            </td>
+                                            <t t-if="event_type_id">
+                                            <td colspan="4">
+                                                <t>Items:
+                                                    <t t-esc="i['items']"/>
+                                                </t>
+                                            </td>
+                                            </t>
+                                            <t t-else="">
+                                            <td colspan="5">
+                                                <t>Items:
+                                                    <t t-esc="i['items']"/>
+                                                </t>
+<!--                                                <br></br>-->
+<!--                                                <br></br>-->
+<!--                                                <t>Breakfast:-->
+<!--                                                    <t t-esc="breakfast"/>-->
+<!--                                                </t>-->
+<!--                                                <br></br>-->
+<!--                                                <br></br>-->
+<!--                                                <t>Lunch:-->
+<!--                                                    <t t-esc="lunch"/>-->
+<!--                                                </t>-->
+                                            </td>
+                                            </t>
+<!--                                            <td>-->
+<!--                                                <t t-esc="i['catering']"/>-->
+<!--                                            </td>-->
+                                        </tr>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <t t-if="event_type_id">
+                                    <th colspan="5">Total :</th>
+                                    </t>
+                                    <t t-else="">
+                                        <th colspan="6">Total :</th>
+                                    </t>
+                                <td>
+                                    <span t-esc="total"/></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+
+<template id="portal_my_home_sale" name="Show Quotations / Sales Orders" customize_show="True" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Quotations</t>
+                <t t-set="placeholder_count" t-value="'quotation_count'"/>
+            </t>
+        </xpath>
+    </template>

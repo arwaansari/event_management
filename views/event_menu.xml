@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <menuitem id="event_root" name="Event Management">
+            <menuitem id="event_booking_first_level_menu" name="Event Booking" sequence="0">
+                <menuitem id="event_booking_menu_action" action="event_booking_action"/>
+             </menuitem>
+            <menuitem id="event_catering_first_level_menu" name="Catering" sequence="1">
+                <menuitem id="event_catering_menu_action_1" action="event_catering_action"/>
+            </menuitem>
+             <menuitem id="event_reporting_first_level_menu" name="Reporting" sequence="2">
+                <menuitem id="event_reporting_menu_action" action="event_reporting_action"/>
+            </menuitem>
+            <menuitem id="configuration_first_level_menu" name="Configuration" sequence="3">
+                <menuitem id="configuration_menu_action" action="event_type_action"/>
+                <menuitem id="service_menu_action" action="event_service_action"/>
+                <menuitem id="catering_menu_action" action="event_catering_menu_action"/>
+            </menuitem>
+
+        </menuitem>
+    </data>
+</odoo>

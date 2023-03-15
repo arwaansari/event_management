@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="event_booking_action" model="ir.actions.act_window">
+            <field name="name">Event Bookings</field>
+            <field name="res_model">event.booking</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="event_booking_tree" model="ir.ui.view">
+            <field name="name">tree</field>
+            <field name="model">event.booking</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="name"/>
+<!--                    <field name="event"/>-->
+                    <field name="type_id" string="Event Type"/>
+                    <field name="customer_id"/>
+                    <field name="booking_date"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="event_booking_form" model="ir.ui.view">
+            <field name="name">form</field>
+            <field name="model">event.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Confirmed"/>
+                        <button name="action_confirm" class="oe_highlight" states="Draft" string="Confirm"
+                                type="object"/>
+                        <button name="action_open_invoice" class="oe_highlight" string="Create Invoice" type="object"
+                                 attrs="{'invisible':[('invoice_btn_visibility', '=', False)]}"/>
+                        <button name="action_open_catering_form" class="oe_highlight" string="Catering Service"
+                                type="object" attrs="{'invisible':[('catering_btn_visibility', '=', True)]}"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" position="inside" >
+                            <button class="oe_stat_button" type="object" name="get_invoice" string="Invoice"
+                                icon="fa-pencil-square-o" attrs="{'invisible':([('invoice_count', '=', 0)])}">
+                                <field string="Invoice" name="invoice_count" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_catering_service" attrs="{'invisible':([('cat_service_count', '=', 0)])}">
+                                <field string="Catering Service" name="cat_service_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" text="Paid" attrs="{'invisible':([('paid','=', False)])}"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="customer_id" widget="res_partner_many2one"
+                                       context="{'show_address': 1}"
+                                       options="{'always_reload': True}"/>
+                                <field name="booking_date"/>
+                                <field name="type_id"/>
+                                <field name="image" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="duration"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="catering_id" invisible="1"/>
+                                <field name="paid" invisible="1"/>
+                                <field name="invoice_btn_visibility" invisible="1"/>
+                                <field name="catering_btn_visibility" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                        <field name="activity_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

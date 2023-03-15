@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="event_catering_action" model="ir.actions.act_window">
+            <field name="name">Catering</field>
+            <field name="res_model">event.catering</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="ir_cron_expired_state" model="ir.cron">
+            <field name="name">Expired State</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="model_id" ref="model_event_catering"/>
+            <field name="code">model.expiry()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        <record id="event_catering_tree" model="ir.ui.view">
+            <field name="name">tree</field>
+            <field name="model">event.catering</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="event_id"/>
+                    <field name="booking_date"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="event_catering_form" model="ir.ui.view">
+            <field name="name">form</field>
+            <field name="model">event.catering</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,confirmed,delivered,invoiced"/>
+                        <button name="action_confirm" class="oe_highlight"
+                                states="draft" string="Confirm" type="object"
+                                help="Move Catering to Confirmed state"/>
+                        <button name="action_deliver" class="oe_highlight"
+                                states="draft,confirmed" string="Deliver"
+                                type="object"
+                                help="Move Catering to In Delivered state"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group>
+
+                                <field name="event_id"
+                                       attrs="{'readonly':[('boolean', '=', True)]}"/>
+                                <field name="booking_date" groups="base.view_groups_form"/>
+                                <field name="start_date" groups="base.view_groups_form"/>
+                                <field name="end_date"/>
+                                <field name="guest"/>
+                                <field name="boolean" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="welcome_drink"/>
+                                <field name="breakfast"/>
+                                <field name="lunch"/>
+                                <field name="dinner"/>
+                                <field name="snacks_and_drinks"/>
+                                <field name="beverages"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Welcome Drink"
+                                  attrs="{'invisible':[('welcome_drink', '=', False)]}">
+                                <field name="welcome_drink_table_ids">
+                                    <tree editable="bottom">
+                                        <field name="item_id"
+                                               domain="[('category','=','welcome_drink')]"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="unit_price"/>
+                                        <field name="subtotal"
+                                               sum="total subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Breakfast"
+                                  attrs="{'invisible':[('breakfast', '=', False)]}">
+                                <field name="breakfast_table_ids">
+                                    <tree editable="bottom">
+                                        <field name="item_id"
+                                               domain="[('category','=','breakfast')]"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="unit_price"/>
+                                        <field name="subtotal"
+                                               sum="total subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Lunch"
+                                  attrs="{'invisible':[('lunch', '=', False)]}">
+                                <field name="lunch_table_ids">
+                                    <tree editable="bottom">
+                                        <field name="item_id"
+                                               domain="[('category','=','lunch')]"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="unit_price"/>
+                                        <field name="subtotal"
+                                               sum="total subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Dinner"
+                                  attrs="{'invisible':[('dinner', '=', False)]}">
+                                <field name="dinner_table_ids">
+                                    <tree editable="bottom">
+                                        <field name="item_id"
+                                               domain="[('category','=','dinner')]"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="unit_price"/>
+                                        <field name="subtotal"
+                                               sum="total subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Snacks and Drinks"
+                                  attrs="{'invisible':[('snacks_and_drinks', '=', False)]}">
+                                <field name="snacks_drinks_table_ids">
+                                    <tree editable="bottom">
+                                        <field name="item_id"
+                                               domain="[('category','=','snacks_and_drinks')]"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="unit_price"/>
+                                        <field name="subtotal"
+                                               sum="total subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Beverages"
+                                  attrs="{'invisible':[('beverages', '=', False)]}"
+                                  domain="[('category','=','beverages')]">
+                                <field name="beverage_table_ids">
+                                    <tree editable="bottom">
+                                        <field name="item_id"
+                                               domain="[('category','=','beverages')]"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="unit_price"/>
+                                        <field name="subtotal"
+                                               sum="total subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group class="oe_subtotal_footer oe_right" colspan="2"
+                               name="grand_total">
+                            <field name="grand_total" colspan="2" readonly="1"
+                                   attrs="{'invisible':[('welcome_drink', '=', False),('breakfast', '=', False),('lunch', '=', False),('snacks_and_drinks', '=', False),('dinner', '=', False),('beverages', '=', False)]}"/>
+                            <!--                                <field name="currency_id" invisible="1"/>-->
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                        <field name="activity_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="sequence_catering" model="ir.sequence">
+            <field name="name">Catering Sequence</field>
+            <field name="code">event.catering</field>
+            <field name="prefix">CAT</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

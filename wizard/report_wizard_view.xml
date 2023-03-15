@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="event_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">event.report.wizard.form</field>
+        <field name="model">event.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group class="oe_title">
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="event_type_id" options="{'no_quick_create': True, 'no_create_edit' : True}"/>
+                    <field name="include_catering"/>
+                </group>
+                <footer>
+                    <button string="PDF" name="print_pdf_report" class="oe_highlight" type="object"/>
+                    <button string="XSLX" name="print_xlsx_report" class="oe_highlight" type="object"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="event_reporting_action" model="ir.actions.act_window">
+        <field name="name">Event Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">event.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="event_report_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>
